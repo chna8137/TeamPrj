@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항</title>
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script type="text/javascript" src="/js/jquery-3.6.0.min.js">
+
+
+        //글자 길이 바이트 단위로 체크하기(바이트값 전달)
+        function calBytes(str) {
+            let tcount = 0;
+            let tmpStr = String(str);
+            let strCnt = tmpStr.length;
+            let onechar;
+            for (let i = 0; i < strCnt; i++) {
+                onechar = tmpStr.charAt(i);
+                if (escape(onechar).length > 4) {
+                    tcount += 2;
+                } else {
+                    tcount += 1;
+                }
+            }
+            return tcount;
+        }
+
+        // 공지사항 저장하기
+        function doSubmit() {
+
+            let f = document.getElementById("f"); // form 태그
+
+            if (f.title.value === "") {
+                alert("제목을 입력하시기 바랍니다.");
+                f.title.focus();
+                return;
+            }
+            if (calBytes(f.title.value) > 200) {
+                alert("최대 200Bytes까지 입력 가능합니다.");
+                f.title.focus();
+                return;
+            }
+            let noticeCheck = false; //체크 여부 확인 변수
+            for (let i = 0; i < f.notice_yn.length; i++) {
+                if (f.notice_yn[i].checked) {
+                    noticeCheck = true;
+                    break;
+                }
+            }
+            // if (noticeCheck === false) {
+            //     alert("공지글 여부를 선택하시기 바랍니다.");
+            //     f.notice_yn[0].focus();
+            //     return;
+            // }
+            if (f.contents.value === "") {
+                alert("내용을 입력하시기 바랍니다.");
+                f.contents.focus();
+                return;
+            }
+            if (calBytes(f.contents.value) > 4000) {
+                alert("최대 4000Bytes까지 입력 가능합니다.");
+                f.contents.focus();
+                return;
+            }
+
+        }
+    </script>
+</head>
+<body>
+<form action="/notice/noticeInsert" method="post" onsubmit="doSubmit()" name="f" id="f">
+<!--    <div class="board_wrap">-->
+<!--        <div class="board_title">-->
+<!--            <strong>공지사항</strong>-->
+<!--            <p>공지사항을 빠르고 정확하게 안내해드립니다.</p>-->
+<!--        </div>-->
+<!--        <div class="board_write_wrap">-->
+<!--            <div class="board_write">-->
+<!--                <div class="title">-->
+<!--                    <dl>-->
+<!--                        <dt>제목</dt>-->
+<!--                        <dd><input type="text" name="title" placeholder="제목 입력"></dd>-->
+<!--                    </dl>-->
+<!--                </div>-->
+<!--                <div class="divTableRow">-->
+<!--                    <div class="divTableCell">공지글 여부-->
+<!--                    </div>-->
+<!--                    <div class="divTableCell">-->
+<!--                        예<input type="radio" name="notice_yn" value="Y"/>-->
+<!--                        아니오<input type="radio" name="notice_yn" value="N"/>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--&lt;!&ndash;                <div class="info">&ndash;&gt;-->
+<!--&lt;!&ndash;                <dl>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <dt>글쓴이</dt>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <dd><input type="text" placeholder="글쓴이 입력"></dd>&ndash;&gt;-->
+<!--&lt;!&ndash;                </dl>&ndash;&gt;-->
+<!--&lt;!&ndash;                <dl>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <dt>비밀번호</dt>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <dd><input type="password" placeholder="비밀번호 입력"></dd>&ndash;&gt;-->
+<!--&lt;!&ndash;                </dl>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--                <div class="divTableRow">-->
+<!--                    <div class="divTableCell">조회수-->
+<!--                    </div>-->
+<!--                    <div class="divTableCell">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="cont">-->
+<!--                <textarea name="contents" placeholder="내용 입력"></textarea>-->
+<!--            </div>-->
+<!--            <div class="bt_wrap">-->
+<!--                <a href="/noti/view" class="on">등록</a>-->
+<!--                <a href="/noti/list">취소</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    </div>-->
+    <div class="board_wrap">
+        <div class="board_title">
+            <strong>공지사항</strong>
+            <p>공지사항을 빠르고 정확하게 안내해드립니다.</p>
+        </div>
+        <div class="board_write_wrap">
+            <div class="board_write">
+                <div class="title">
+                    <dl>
+                        <dt>제목</dt>
+                        <dd><input type="text" placeholder="제목 입력"></dd>
+                    </dl>
+                </div>
+                <div class="info">
+<!--                    <dl>-->
+<!--                        <dt>글쓴이</dt>-->
+<!--                        <dd><input type="text" placeholder="글쓴이 입력"></dd>-->
+<!--                    </dl>-->
+<!--                    <dl>-->
+<!--                        <dt>비밀번호</dt>-->
+<!--                        <dd><input type="password" placeholder="비밀번호 입력"></dd>-->
+<!--                    </dl>-->
+                </div>
+                <div class="cont">
+                    <textarea placeholder="내용 입력"></textarea>
+                </div>
+                <div class="bt_wrap">
+                    <a href="/noti/view" class="on">등록</a>-->
+                    <a href="/noti/list">취소</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>
